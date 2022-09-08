@@ -23,7 +23,9 @@ export const App = () => {
 
   useEffect(() => {
     if (firstRender) {
-      setContacts(JSON.parse(window.localStorage.getItem('contacts')))
+      if (window.localStorage.getItem('contacts')) {
+       setContacts(JSON.parse(window.localStorage.getItem('contacts')))
+      }
       setFirstRender(false)
       return;
     }
@@ -50,11 +52,11 @@ export const App = () => {
   };
 
   const filteredContacts = () => {
-    const result = contacts.filter((contact) => {
+      const result = contacts.filter((contact) => {
       const nameToLower = contact.name.toLowerCase();
       return nameToLower.includes(filter)
-    })
-    return result;
+      })
+      return result;
   }
 
   const deleteContact = (contactId) => {
