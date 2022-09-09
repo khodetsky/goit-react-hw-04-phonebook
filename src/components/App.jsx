@@ -22,15 +22,17 @@ export const App = () => {
   const [firstRender, setFirstRender] = useState(true)
 
   useEffect(() => {
-    if (firstRender) {
-      if (window.localStorage.getItem('contacts')) {
+    if (window.localStorage.getItem('contacts')) {
        setContacts(JSON.parse(window.localStorage.getItem('contacts')))
-      }
-      setFirstRender(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (firstRender) {
       return;
     }
     window.localStorage.setItem('contacts', JSON.stringify(contacts))
-  }, [contacts, firstRender]);
+  }, [contacts, firstRender])
 
   const addContact = (values, { resetForm }) => {
     if (contacts.find(contact => contact.name === values.name)) {
@@ -42,6 +44,7 @@ export const App = () => {
     } else if (values.number === "") {
       alert(`Сontact must contain a number`)
     } else {
+      setFirstRender(false)
       setContacts([...contacts, { id: nanoid(), ...values }])
       resetForm();
     }
