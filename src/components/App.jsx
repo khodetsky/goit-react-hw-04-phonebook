@@ -63,6 +63,7 @@ export const App = () => {
   }
 
   const deleteContact = (contactId) => {
+    setFirstRender(false)
     setContacts(prevState => (prevState.filter(contact => contact.id !== contactId)
     ))
   }
